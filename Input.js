@@ -3,7 +3,7 @@ Object.defineProperty(globalThis, "Input", {
     value: (function () {
         class Key {
             #onPressFuncs;
-            #onReleaseFuncs
+            #onReleaseFuncs;
             constructor() {
                 this.#onPressFuncs = new Set();
                 this.#onReleaseFuncs = new Set();
@@ -18,7 +18,8 @@ Object.defineProperty(globalThis, "Input", {
                 if (typeof func != "function")
                     throw TypeError(`onUp expected a function, received a ${typeof func}`);
                 this.#onReleaseFuncs.add(func);
-            }
+            } 
+      
             down(k) {
                 this.pressed = true;
                 for (const func of this.#onPressFuncs) {
@@ -32,25 +33,36 @@ Object.defineProperty(globalThis, "Input", {
                 }
             }
         }
-        let keypresses = {};
-        for (let i = 32; i <= 126; i++) {
+        let keypresses = {
+          preventDefaultBehavior: false
+        };
+        for (let i = 33; i <= 126; i++) {
             keypresses[String.fromCharCode(i)] = new Key();
         }
-        ["any", "shift", "control", "alt", "tab", "enter", "backspace", "escape", "space"]
-            .forEach(function (e) {
+        ["any", "shift", "control", "metaKey", "alt", "tab", "enter", "backspace", "escape", "space"]
+        .forEach(function (e) {
             keypresses[e] = new Key();
         });
         function onDown(event) {
-            if (keypresses[event.key] == undefined) {
-                console.log(event.key);
+            if (keypresses.preventDefaultBehavior) event.preventDefault()
+            let k = (event.key == " ") ? "space" : event.metaKey ? "metaKey" : event.key.toLowerCase();
+            if (!(k in keypresses)) { 
+                console.error(`Key ${k} is not predefined please open an issue in the repo to get it fixed`); 
+                keypresses[k] = new Key()
+                return;
             }
-            let k = (event.key == " ") ? "space" : event.key.toLowerCase();
-            keypresses[k].down();
+            keypresses[k].down(k);
             keypresses.any.down(k);
         }
         function onUp(event) {
-            let k = (event.key == " ") ? "space" : event.key.toLowerCase();
-            keypresses[k].release();
+            if (keypresses.preventDefaultBehavior) event.preventDefault()
+            let k = (event.key == " ") ? "space" : event.metaKey ? "metaKey" : event.key.toLowerCase();
+            if (!(k in keypresses)) { 
+                console.error(`Key ${k} is not predefined please open an issue in the repo to get it fixed`); 
+                keypresses[k] = new Key()
+                return;
+            }            
+            keypresses[k].release(k);
             keypresses.any.release(k);
         }
         globalThis.addEventListener("keydown", (event) => onDown(event));
