@@ -1,5 +1,5 @@
 # keyPresses library
-A simple browser keyboard input handler.This library attaches an Input object directly to the global window scope (globalThis), providing a clean API to check which keys are pressed and attach custom callbacks to key events.
+A simple browser keyboard input handler. This library attaches an Input object directly to the global window scope (globalThis), providing a clean API to check which keys are pressed and attach custom callbacks to key events.
 
 #### How to link
 Imbed the following code into your head to use the library
@@ -56,7 +56,7 @@ if (Input.any.pressed) {
     console.log("A key is pressed")
 }
 
-console.log(Input.any.getPressedKeys()) // Logs an array of all the key's pressed.
+console.log(Input.any.getPressedKeys()) // Logs an array of all the keys pressed.
 ````
 
 #### Configuration
