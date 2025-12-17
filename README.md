@@ -68,7 +68,7 @@ The library pre-defines standard ASCII characters (!, ", #, $ ... ~) as well as 
 2. shift
 3. control
 4. alt
-5. metaKey (Command on Mac, Windows key on PC)
+5. metaKey (Command on Mac, Windows key on PC, search on Chromebook)
 6. tab
 7. enter
 8. backspace
