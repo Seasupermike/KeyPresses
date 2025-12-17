@@ -51,6 +51,10 @@ Input.any.onPress((keyName) => {
 Input.any.onRelease(function (keyName) {
     console.log(`Key released globally: ${keyName}`);
 });
+
+if (Input.any.pressed) {
+    console.log("A key is pressed")
+}
 ````
 
 #### Configuration
