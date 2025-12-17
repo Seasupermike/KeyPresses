@@ -31,12 +31,12 @@ if (Input.shift.pressed && Input.a.pressed) {
 You can attach functions that run once when a key is pressed down or released.
 ````javascript
 // Log a message every time the 'Enter' key is pressed
-Input.enter.onDown(() => {
+Input.enter.onPress(() => {
     console.log("Action confirmed!");
 });
 
 // Log a message when the 'Escape' key is released
-Input.escape.onUp(function () {
+Input.escape.onRelease(function () {
     console.log("Menu closed.");
 });
 ````
@@ -44,11 +44,11 @@ Input.escape.onUp(function () {
 3. The any Key Handler
 A special key Input.any is available. Its callbacks run whenever any tracked key is pressed or released. The callback function receives the name of the key that triggered the event as an argument.
 ````javascript
-Input.any.onDown((keyName) => {
+Input.any.onPress((keyName) => {
     console.log(`Key pressed globally: ${keyName}`);
 });
 
-Input.any.onUp(function (keyName) {
+Input.any.onRelease(function (keyName) {
     console.log(`Key released globally: ${keyName}`);
 });
 ````
