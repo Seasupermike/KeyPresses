@@ -55,6 +55,8 @@ Input.any.onRelease(function (keyName) {
 if (Input.any.pressed) {
     console.log("A key is pressed")
 }
+
+console.log(Input.any.getPressedKeys()) // Logs an array of all the key's pressed.
 ````
 
 #### Configuration
