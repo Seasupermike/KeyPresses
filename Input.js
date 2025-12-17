@@ -33,23 +33,76 @@ Object.defineProperty(globalThis, "Input", {
                 }
             }
         }
+        
+        class anyKey {
+            #onPressFuncs;
+            #onReleaseFuncs;
+            #keysPressed;
+            constructor() {
+                this.#onPressFuncs = new Set();
+                this.#onReleaseFuncs = new Set();
+                this.#keysPressed = new Set();
+                this.pressed = false;
+            }
+            onPress(func) {
+                if (typeof func != "function")
+                    throw TypeError(`onPress expected a function, received a ${typeof func}`);
+                this.#onPressFuncs.add(func);
+            }
+            onRelease(func) {
+                if (typeof func != "function")
+                    throw TypeError(`onRelease expected a function, received a ${typeof func}`);
+                this.#onReleaseFuncs.add(func);
+            } 
+      
+            down(k) {
+                this.pressed = true;
+                this.#keysPressed.add(k)
+                for (const func of this.#onPressFuncs) {
+                    func(k);
+                }
+            }
+            release(k) {
+                this.pressed = false;
+                this.#keysPressed.delete(k)
+                for (const func of this.#onReleaseFuncs) {
+                    func(k);
+                }
+            }
+            
+            getPressedKeys() {
+              return this.#keysPressed.values().toArray()
+            }
+        }
         let keypresses = {
           preventDefaultBehavior: false
         };
         for (let i = 33; i <= 126; i++) {
-            keypresses[String.fromCharCode(i)] = new Key();
+            Object.defineProperty(keypresses, String.fromCharCode(i), 
+            {  value: new Key(), 
+               writable: false,
+               configurable: false 
+            });
         }
-        ["any", "shift", "control", "metaKey", "alt", "tab", "enter", "backspace", "escape", "space"]
+        ["shift", "control", "metaKey", "alt", "tab", "enter", "backspace", "escape", "space"]
         .forEach(function (e) {
-            keypresses[e] = new Key();
+            Object.defineProperty(keypresses, e, 
+            {  value: new Key(), 
+               writable: false,
+               configurable: false 
+            });
         });
+        Object.defineProperty(keypresses, "any", 
+            {  value: new anyKey(), 
+               writable: false,
+               configurable: false 
+            });
         function onDown(event) {
             if (keypresses.preventDefaultBehavior) event.preventDefault()
             let k = (event.key == " ") ? "space" : event.metaKey ? "metaKey" : event.key.toLowerCase();
             if (!(k in keypresses)) { 
                 console.error(`Key ${k} is not predefined please open an issue in the repo to get it fixed`); 
                 keypresses[k] = new Key()
-                return;
             }
             keypresses[k].down(k);
             keypresses.any.down(k);
@@ -58,9 +111,8 @@ Object.defineProperty(globalThis, "Input", {
             if (keypresses.preventDefaultBehavior) event.preventDefault()
             let k = (event.key == " ") ? "space" : event.metaKey ? "metaKey" : event.key.toLowerCase();
             if (!(k in keypresses)) { 
-                console.error(`Key ${k} is not predefined please open an issue in the repo to get it fixed`); 
+                console.error(`Key ${k} is not predefined please open an issue in the Keypresses repo to get it fixed`); 
                 keypresses[k] = new Key()
-                return;
             }            
             keypresses[k].release(k);
             keypresses.any.release(k);
