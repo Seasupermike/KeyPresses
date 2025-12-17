@@ -9,14 +9,14 @@ Object.defineProperty(globalThis, "Input", {
                 this.#onReleaseFuncs = new Set();
                 this.pressed = false;
             }
-            onDown(func) {
+            onPress(func) {
                 if (typeof func != "function")
-                    throw TypeError(`onDown expected a function, received a ${typeof func}`);
+                    throw TypeError(`onPress expected a function, received a ${typeof func}`);
                 this.#onPressFuncs.add(func);
             }
-            onUp(func) {
+            onRelease(func) {
                 if (typeof func != "function")
-                    throw TypeError(`onUp expected a function, received a ${typeof func}`);
+                    throw TypeError(`onRelease expected a function, received a ${typeof func}`);
                 this.#onReleaseFuncs.add(func);
             } 
       
