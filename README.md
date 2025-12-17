@@ -36,7 +36,7 @@ Input.enter.onDown(() => {
 });
 
 // Log a message when the 'Escape' key is released
-Input.escape.onUp(() => {
+Input.escape.onUp(function () {
     console.log("Menu closed.");
 });
 ````
@@ -48,7 +48,7 @@ Input.any.onDown((keyName) => {
     console.log(`Key pressed globally: ${keyName}`);
 });
 
-Input.any.onUp((keyName) => {
+Input.any.onUp(function (keyName) {
     console.log(`Key released globally: ${keyName}`);
 });
 ````
