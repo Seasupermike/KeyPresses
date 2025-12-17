@@ -93,7 +93,7 @@ Object.defineProperty(globalThis, "Input", {
                configurable: false 
             });
         }
-        ["shift", "control", "metaKey", "alt", "tab", "enter", "backspace", "escape", "space", "arrowup", "arrowdown", "arrowleft", "arrowright"]
+        ["shift", "control", "metakey", "alt", "tab", "enter", "backspace", "escape", "space", "arrowup", "arrowdown", "arrowleft", "arrowright"]
         .forEach(function (e) {
             Object.defineProperty(keypresses, e, 
             {  value: new Key(), 
@@ -108,7 +108,7 @@ Object.defineProperty(globalThis, "Input", {
             });
         function onDown(event) {
             if (keypresses.preventDefaultBehavior) event.preventDefault()
-            let k = (event.key == " ") ? "space" : event.metaKey ? "metaKey" : event.key.toLowerCase();
+            let k = (event.key == " ") ? "space" : event.metaKey ? "metakey" : event.key.toLowerCase();
             if (!(k in keypresses)) { 
                 console.error(`Key ${k} is not predefined please open an issue in the repo to get it fixed`); 
                 keypresses[k] = new Key()
@@ -118,7 +118,7 @@ Object.defineProperty(globalThis, "Input", {
         }
         function onUp(event) {
             if (keypresses.preventDefaultBehavior) event.preventDefault()
-            let k = (event.key == " ") ? "space" : event.metaKey ? "metaKey" : event.key.toLowerCase();
+            let k = (event.key == " ") ? "space" : event.metaKey ? "metakey" : event.key.toLowerCase();
             if (!(k in keypresses)) { 
                 console.error(`Key ${k} is not predefined please open an issue in the Keypresses repo to get it fixed`); 
                 keypresses[k] = new Key()
