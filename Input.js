@@ -75,8 +75,17 @@ Object.defineProperty(globalThis, "Input", {
             }
         }
         let keypresses = {
-          preventDefaultBehavior: false
+          preventDefaultBehavior: false,
         };
+        Object.defineProperty(keypresses, "addKey", {
+          value: function (key) {
+            if (key in this) return
+            this[key] = new Key()
+          },
+          
+          writable: false,
+          configurable: false 
+        })
         for (let i = 33; i <= 126; i++) {
             Object.defineProperty(keypresses, String.fromCharCode(i), 
             {  value: new Key(), 
@@ -84,7 +93,7 @@ Object.defineProperty(globalThis, "Input", {
                configurable: false 
             });
         }
-        ["shift", "control", "metaKey", "alt", "tab", "enter", "backspace", "escape", "space"]
+        ["shift", "control", "metaKey", "alt", "tab", "enter", "backspace", "escape", "space", "arrowup", "arrowdown", "arrowleft", "arrowright"]
         .forEach(function (e) {
             Object.defineProperty(keypresses, e, 
             {  value: new Key(), 
@@ -124,5 +133,3 @@ Object.defineProperty(globalThis, "Input", {
     writable: false,
     configurable: false
 });
-
-Object.freeze(Input)
