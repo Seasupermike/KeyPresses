@@ -124,3 +124,5 @@ Object.defineProperty(globalThis, "Input", {
     writable: false,
     configurable: false
 });
+
+Object.freeze(Input)
