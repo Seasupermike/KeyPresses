@@ -85,12 +85,13 @@ Object.defineProperty(globalThis, "Input", {
         };
         Object.defineProperty(keypresses, "addKey", {
           value: function (key) {
-            if (key in this) return
-            Object.defineProperty(keypresses, key, {
-                value: new Key(key),
-                writable: false,
-                configurable: false
-            })
+                key = key.toLowerCase()
+                if (key in this) return
+                Object.defineProperty(keypresses, key, {
+                    value: new Key(key),
+                    writable: false,
+                    configurable: false
+                })
           },
           
           writable: false,
