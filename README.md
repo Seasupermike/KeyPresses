@@ -84,3 +84,10 @@ The library pre-defines standard ASCII characters (!, ", #, $ ... ~) as well as 
 Keys are normalized to lowercase internally (e.g., you check Input.a.pressed, not Input.A.pressed).
 Handling Unknown Keys
 If a user presses a key that wasn't included in the initial configuration (e.g.,  numpad keys, or international characters), the system dynamically adds a new Key object for it and logs a console error asking you to open an issue in the repo to get it fixed. The key will then be tracked like any other key.
+
+To define a key on start up use the addKey funcion.
+````javascript
+if (Input.examplekey.pressed) console.log("Hi") // This will throw an error
+Input.addKey("examplekey") // This will add the key
+if (Input.exampleKey.pressed) console.log("Hi") // Will now work
+````
