@@ -45,11 +45,11 @@ Input.escape.onRelease(function () {
 A special key Input.any is available. Its callbacks run whenever any tracked key is pressed or released. The callback function receives the name of the key that triggered the event as an argument.
 ````javascript
 Input.any.onPress((keyName) => {
-    console.log(`Key pressed globally: ${keyName}`);
+    console.log(`Key pressed globally: ${keyName}`)
 });
 
 Input.any.onRelease(function (keyName) {
-    console.log(`Key released globally: ${keyName}`);
+    console.log(`Key released globally: ${keyName}`)
 });
 
 if (Input.any.pressed) {
@@ -87,7 +87,10 @@ If a user presses a key that wasn't included in the initial configuration (e.g.,
 
 To define a key on start up use the addKey funcion.
 ````javascript
-if (Input.examplekey.pressed) console.log("Hi") // This will throw an error
-Input.addKey("examplekey") // This will add the key
-if (Input.exampleKey.pressed) console.log("Hi") // Will now work
+try {
+    if (Input.examplekey.pressed) console.log("Hi") // This will throw an error
+} catch {
+    Input.addKey("examplekey") // This will add the key
+    if (Input.exampleKey.pressed) console.log("Hi") // Will now work
+}
 ````
