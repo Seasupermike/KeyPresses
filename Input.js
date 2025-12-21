@@ -104,7 +104,7 @@ Object.defineProperty(globalThis, "Input", {
     for (let i = 33; i <= 126; i++) {
       keypresses.addKey(String.fromCharCode(i));
     }
-    ["shift", "control", "meta", "alt", "tab", "enter", "backspace", "escape", "space", "arrowup", "arrowdown", "arrowleft", "arrowright", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19", "F20", "F21", "F22", "F23", "F24"]
+    ["capslock", "shift", "control", "meta", "alt", "tab", "enter", "backspace", "escape", "space", "arrowup", "arrowdown", "arrowleft", "arrowright", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19", "F20", "F21", "F22", "F23", "F24"]
     .forEach(k => keypresses.addKey(k));
     Object.defineProperty(keypresses, "any", {
       value: new anyKey(),
@@ -114,11 +114,13 @@ Object.defineProperty(globalThis, "Input", {
     function onDown(event) {
       if (event.repeat) return;
       if (keypresses.preventDefaultBehavior) event.preventDefault();
-      let k = event.key == " " ? "space" : event.metaKey ? "meta" : "metaKey" ?  "meta" : event.key.toLowerCase();
-      if (!(k in keypresses)) {
-        console.warn(
-          `Key ${k} is not predefined please open an issue in the repo to get it fixed`
-        );
+      let k = event.key.toLowerCase();
+      if (k in Keypresses) {
+        
+      } else if (event.metaKey) {
+        k = "meta"
+      } else {
+        console.warn(`Key ${k} is not predefined please open an issue in the repo to get it fixed`);
         keypresses.addKey(k);
       }
       keypresses[k].down(k);
@@ -127,17 +129,18 @@ Object.defineProperty(globalThis, "Input", {
     function onUp(event) {
       if (event.repeat) return;
       if (keypresses.preventDefaultBehavior) event.preventDefault();
-      let k = event.key == " " ? "space" : event.metaKey ? "meta" : "metaKey" ?  "meta" : event.key.toLowerCase();
-      if (!(k in keypresses)) {
-        console.warn(
-          `Key ${k} is not predefined please open an issue in the Keypresses repo to get it fixed`
-        );
+      if (k in Keypresses) {
+        
+      } else if (event.metaKey) {
+        k = "meta"
+      } else {
+        console.warn(`Key ${k} is not predefined please open an issue in the repo to get it fixed`);
         keypresses.addKey(k);
       }
       keypresses[k].release(k);
       keypresses.any.release(k);
     }
-    globalThis.addEventListener("keydown", (event) => onDown(event));
+    globalThis.addEventListener("keydown", (event) => { onDown(event); console.log(event.key) });
     globalThis.addEventListener("keyup", (event) => onUp(event));
     return keypresses;
   })(),
