@@ -119,6 +119,8 @@ Object.defineProperty(globalThis, "Input", {
         
       } else if (event.metaKey) {
         k = "meta"
+      } else if (k == " ") {
+        k = "space"
       } else {
         console.warn(`Key ${k} is not predefined please open an issue in the repo to get it fixed`);
         keypresses.addKey(k);
@@ -134,6 +136,8 @@ Object.defineProperty(globalThis, "Input", {
         
       } else if (event.metaKey) {
         k = "meta"
+      } else if (k == " ") {
+        k = "space"
       } else {
         console.warn(`Key ${k} is not predefined please open an issue in the repo to get it fixed`);
         keypresses.addKey(k);
