@@ -115,7 +115,7 @@ Object.defineProperty(globalThis, "Input", {
       if (event.repeat) return;
       if (keypresses.preventDefaultBehavior) event.preventDefault();
       let k = event.key.toLowerCase();
-      if (k in Keypresses) {
+      if (k in keypresses) {
         
       } else if (event.metaKey) {
         k = "meta"
@@ -129,6 +129,7 @@ Object.defineProperty(globalThis, "Input", {
     function onUp(event) {
       if (event.repeat) return;
       if (keypresses.preventDefaultBehavior) event.preventDefault();
+      let k = event.key.toLowerCase();
       if (k in Keypresses) {
         
       } else if (event.metaKey) {
