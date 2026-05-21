@@ -145,8 +145,8 @@ Object.defineProperty(globalThis, "Input", {
       keypresses[k].release(k);
       keypresses.any.release(k);
     }
-    globalThis.addEventListener("keydown", (event) => { onDown(event) });
-    globalThis.addEventListener("keyup", (event) => onUp(event) );
+    globalThis.addEventListener("keydown", (event) => onDown(event));
+    globalThis.addEventListener("keyup", (event) => onUp(event));
     return keypresses;
   })(),
   writable: false,
